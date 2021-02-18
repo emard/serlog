@@ -17,8 +17,8 @@ def reopen_serial():
   ser.open()
 
 def datenow():
-  #return str(datetime.datetime.today()).split()[0] # yyyy-mm-dd every day
-  return str(datetime.datetime.today()).split()[1][0:5] # hh:mm every minute
+  return str(datetime.datetime.today()).split()[0] # yyyy-mm-dd every day
+  #return str(datetime.datetime.today()).split()[1][0:5] # hh:mm every minute
 
 def filenow():
   return "/tmp/wt-"+datenow()+".log"
@@ -27,7 +27,7 @@ def open_file():
   global current_filename, current_file
   if current_file:
     return
-  current_file = open(current_filename, "w+")
+  current_file = open(current_filename, "a+")
   print("new log file", current_filename)
 
 current_filename = filenow()
@@ -44,13 +44,12 @@ def rotatelog():
       current_file = False
     current_filename = filenow()
 
+reopen_serial()
+
 while True:
+  r=""
   try:
     r=ser.readline().decode("utf-8").strip()+"\n"
-    open_file()
-    current_file.write(r)
-    rotatelog()
-    #print(r)
   except:
     print("trying to reopen", ser.port)
     time.sleep(5)
@@ -58,3 +57,8 @@ while True:
       reopen_serial()
     except:
       print("can't reopen yet")
+  if(len(r)):
+    open_file()
+    current_file.write(r)
+    rotatelog()
+    #print(r)
