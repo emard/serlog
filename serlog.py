@@ -6,6 +6,7 @@ import serial, time, datetime
 
 ser = serial.Serial()
 ser.baudrate = 115200
+ser.timeout = 10
 ser.port = '/dev/ttyUSB0'
 #ser.rtscts = False
 #ser.dsrdtr = False
