@@ -45,8 +45,6 @@ def rotatelog():
       current_file = False
     current_filename = filenow()
 
-reopen_serial()
-
 while True:
   r=""
   try:
