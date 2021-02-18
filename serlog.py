@@ -59,5 +59,6 @@ while True:
   if(len(r)):
     open_file()
     current_file.write(r)
+    current_file.flush()
     rotatelog()
     #print(r)
